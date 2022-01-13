@@ -7,7 +7,6 @@ exports.addTodo = async (req, res) => {
     const response = await todoModel.save(task);
     res.send(response);
   } catch (error) {
-    // console.log(error);
     res.send(error);
   }
 };
@@ -17,7 +16,7 @@ exports.getAllTodo = async (req, res) => {
     const response = await todoModel.getAll();
     res.send(response);
   } catch (error) {
-    console.log(error);
+    res.send(error);
   }
 };
 
@@ -27,18 +26,17 @@ exports.getOneTodo = async (req, res) => {
     const response = await todoModel.getOne(id);
     res.send(response);
   } catch (error) {
-    console.log(error);
+    res.send(error);
   }
 };
 
 exports.updateTodo = async (req, res) => {
   const { id, task } = req.body;
-  
+
   try {
     const response = await todoModel.update(id, task);
     res.send("success");
     res.send(response);
-
   } catch (error) {
     res.send(error);
   }

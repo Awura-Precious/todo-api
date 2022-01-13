@@ -8,11 +8,10 @@ const { addTodo,
         deleteTodo
      } = require("../controller/todo.controller");
 
-const app =express();  
+// const app =express();  
 const router = express.Router();
 
-app.use(express.json());
-
+//routers           
 router.post("/", addTodo);
 
 router.get('/',getAllTodo);
