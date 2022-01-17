@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const expressValidator = require('express-validator') //v 5.x.x
+// const {check,validationResult} = require('express-validator') //v6.x.x
+
 dotenv.config();
 
 const { createConnection } = require("typeorm");
@@ -15,6 +18,7 @@ const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(expressValidator());
 
 //routes
 app.use("/todo", todoRoute); 

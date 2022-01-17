@@ -1,19 +1,25 @@
-const userModel = require('../model/user.model')
+const userModel = require("../model/user.model");
+const { signUpVal } = require("../validation/signUpValidation");
 
 //adding a user
+exports.addUser = async (req, res) => {
+  try {
+    const errors = signUpVal(req);
 
- exports.addUser = async(req,res)=>{
-     const{firstName,lastName,password} = req.body
-     try {
+    if (Object.keys(errors).length > 0) {
+      res.send(errors);
+      return;
+    }
 
-        // if(password !== cPassword){
-        //     res.send("password and confirm passwords should be same")
-        // }
-        const response = await userModel.signUp({firstName:firstName},{lastName:lastName},{password:password})
-        console.log(response)
-        return response
-     } catch (error) {
-         res.send(error)
-         
-     }
- }
+    const { firstName, lastName, pass, mailAdd } = req.body;
+
+    const response = await userModel.signUp(firstName, lastName, pass, mailAdd);
+    // console.log(req.body);
+
+    res.send(response);
+    // }
+  } catch (error) {
+    console.log(error);
+    res.send(error);
+  }
+};

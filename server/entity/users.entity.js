@@ -1,5 +1,4 @@
 const { EntitySchema } = require("typeorm");
-// const { password } = require("../ormconfig");
 
 const userSchema = new EntitySchema({
   name: "tbl_users",
@@ -16,13 +15,12 @@ const userSchema = new EntitySchema({
     lastName: {
       type: "varchar",
     },
-    // pass: {
-    //     type:"char"
-    // }
-    // mail:{
-    //     primary:true,
-
-    // }
+    pass: {
+      type: "varchar",
+    },
+    email: {
+      type: "varchar",
+    },
   },
 });
 

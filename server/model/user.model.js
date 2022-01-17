@@ -4,11 +4,16 @@ const userSchema = require("../entity/users.entity")
 
 //add users //get users
 
-const signUp = async(fName,lName,pWord) => {
+exports.signUp = async(fName,lName,pWord,mail) => {
     const users = getRepository(userSchema);
-    const results = await users.save({firstName:fName},{lastName:lName})
-    return results
-}
+    const result = await users.save({
+        firstName:fName,
+        lastName:lName,
+        pass:pWord,
+        email:mail
+    })
+    return result;
+};
 
 // const login = async(email,password) =>{
 //     const user = getRepository(userSchema);
@@ -16,4 +21,4 @@ const signUp = async(fName,lName,pWord) => {
 //     return result;   ,{password:pass}
 // }
 
-module.exports ={signUp}
+// module.exports ={signUp}
