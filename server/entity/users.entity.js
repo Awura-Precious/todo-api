@@ -1,4 +1,5 @@
 const { EntitySchema } = require("typeorm");
+const bcrypt = require("bcrypt");
 
 const userSchema = new EntitySchema({
   name: "tbl_users",
@@ -20,6 +21,11 @@ const userSchema = new EntitySchema({
     },
     email: {
       type: "varchar",
+      unique: true,
+    },
+    timestamp: {
+      type: "timestamp",
+      default: () => "CURRENT_TIMESTAMP",
     },
   },
 });

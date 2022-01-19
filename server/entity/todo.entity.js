@@ -12,6 +12,10 @@ const todoSchema = new EntitySchema({
     text: {
       type: "varchar",
     },
+    timestamp: {
+			type: 'timestamp',
+			default: () => 'CURRENT_TIMESTAMP',
+		},
   },
 });
 

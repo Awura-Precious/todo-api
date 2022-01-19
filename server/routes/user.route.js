@@ -1,10 +1,124 @@
-const express = require('express');
+const express = require("express");
+// const passport = require("passport");
 
-const {addUser} = require('../controller/users.controller')
+const { addUser, login } = require("../controller/users.controller");
 
 const router = express.Router();
 
-//signing up a user
-router.post('/',addUser);
+//sign up route
+router.post("/", addUser);
+
+//login route
+router.post('/login',login) 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.post("/login", (req, res, next) => {
+  
+//     passport.authenticate("local.signin", (err, user, info) => {
+//       if (err) {
+//         return next(err);
+//       }
+//       if (!user) {
+//         return res.send({ status: 0, errMsg: info });
+//       }
+
+//       req.logIn(user, function (err) {
+//         if (err) {
+//           return next(err);
+//         }
+//         return res.send({ status: 1,succMsg:"User logged in successfull",user });
+//       });
+//     })(req, res, next);
+//   });
+
+

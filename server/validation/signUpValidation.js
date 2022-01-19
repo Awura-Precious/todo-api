@@ -20,6 +20,7 @@ module.exports = {
       .withMessage("Email should be in the format aaa@gmail.com")
       .trim()
       .normalizeEmail();
+      
     let parseErrors = req.validationErrors();
     let getErrors = {};
     parseErrors
