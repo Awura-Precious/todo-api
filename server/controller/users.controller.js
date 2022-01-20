@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const passport = require("passport");
 
 const userModel = require("../model/user.model");
 const { signUpVal } = require("../validation/signUpValidation");
@@ -31,6 +30,7 @@ exports.addUser = async (req, res) => {
   }
 };
 
+//login controller
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -38,21 +38,25 @@ exports.login = async (req, res) => {
 
     // Validate email against database;(authentication)
     const response = await userModel.login(email, password);
-    // console.log('yes');
-    // console.log(hashedPassword);
+    const data = response.firstName;
+
+    // console.log(data);
     if (!response) {
       return res.send("User not found, be sure to sign up");
     }
-    // res.send(response);
 
     // Payload
     const user = {
+      firstName: data,
       email: req.body.email,
       password: req.body.password,
     };
 
+    console.log(user);
+
     // Send TOKEN
-    const token = await jwt.sign({ user }, "secretkey");
+    const key = process.env.JWT_SECRETKEY;
+    const token = await jwt.sign(user, key);
     const successMsg = "Login successful";
     return res.send({
       token,
@@ -61,6 +65,12 @@ exports.login = async (req, res) => {
   } catch (error) {
     return res.send(error);
   }
+};
+
+//post login route
+exports.loginGet = async (req, res) => {
+  const { firstName } = req.user;
+  res.send(`Welcome ${firstName}`);
 };
 
 // exports.login =  (req, res, next) => {

@@ -1,7 +1,11 @@
 const express = require("express");
 // const passport = require("passport");
 
-const { addUser, login } = require("../controller/users.controller");
+const { 
+    addUser,
+    login,
+    loginGet } = require("../controller/users.controller");
+const { authToken } = require("../validation/auth");
 
 const router = express.Router();
 
@@ -10,6 +14,9 @@ router.post("/", addUser);
 
 //login route
 router.post('/login',login) 
+
+//post login route
+router.get('/login',authToken,loginGet)
 
 module.exports = router;
 
