@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const { ExclusionMetadata } = require("typeorm/metadata/ExclusionMetadata");
 
 const userModel = require("../model/user.model");
 const { signUpVal } = require("../validation/signUpValidation");
@@ -16,6 +17,8 @@ exports.addUser = async (req, res) => {
 
     const { firstName, lastName, pass, mailAdd } = req.body;
     const hashedPassword = await bcrypt.hash(pass, 10);
+    //checking to see is email already exist
+
     const response = await userModel.signUp(
       firstName,
       lastName,
@@ -25,7 +28,6 @@ exports.addUser = async (req, res) => {
 
     res.send(response);
   } catch (error) {
-    console.log(error);
     res.send(error);
   }
 };
@@ -33,23 +35,28 @@ exports.addUser = async (req, res) => {
 //login controller
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    // const hashedPassword = await bcrypt.hash(password,10)
+    const { email, pass } = req.body;
 
     // Validate email against database;(authentication)
-    const response = await userModel.login(email, password);
-    const data = response.firstName;
+    const response = await userModel.signIn(email, pass);
 
-    // console.log(data);
     if (!response) {
-      return res.send("User not found, be sure to sign up");
+      return res.status(404).send(`Email isn't registered, 
+                                   Register to login `);
+    }
+
+    //authenticating pass
+    const validPassword = await bcrypt.compare(pass, response.pass);
+
+    if (!validPassword) {
+      return res.status(400).send("Invalid Password");
     }
 
     // Payload
     const user = {
-      firstName: data,
-      email: req.body.email,
-      password: req.body.password,
+      firstName: response.firstName,
+      email: response.email,
+      password: response.pass,
     };
 
     console.log(user);
@@ -63,7 +70,7 @@ exports.login = async (req, res) => {
       successMsg,
     });
   } catch (error) {
-    return res.send(error);
+    return res.send(error.message);
   }
 };
 
@@ -73,21 +80,3 @@ exports.loginGet = async (req, res) => {
   res.send(`Welcome ${firstName}`);
 };
 
-// exports.login =  (req, res, next) => {
-
-//   passport.authenticate("local.signin", (err, user, info) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     if (!user) {
-//       return res.send({ status: 0, errMsg: info });
-//     }
-
-//     req.logIn(user, function (err) {
-//       if (err) {
-//         return next(err);
-//       }
-//       return res.send({ status: 1,succMsg:"User logged in successfull",user });
-//     });
-//   })(req, res, next);
-// }

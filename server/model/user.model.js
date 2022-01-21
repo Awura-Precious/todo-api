@@ -6,7 +6,13 @@ const userSchema = require("../entity/users.entity");
 
 exports.signUp = async (fName, lName, pWord, mail) => {
   const users = getRepository(userSchema);
-
+  const emailres = await users.findOne({
+    email: mail,
+  });
+  if (emailres) {
+    const result = `Email already exist`;
+    return result;
+  }
   const result = await users.save({
     firstName: fName,
     lastName: lName,
@@ -18,13 +24,17 @@ exports.signUp = async (fName, lName, pWord, mail) => {
   return result;
 };
 
-exports.login = async (email, password) => {
+exports.signIn = async (email, password) => {
   const user = getRepository(userSchema);
 
-  const result = await user.findOne({
+  const UserRes = await user.findOne({
     email: email,
-    pass: password,
+    // pass: password,
   });
-  //  console.log(result);
-  return result;
+  // console.log(UserRes);
+  // if (!UserRes) {
+  //   throw new Error(`User not found,Please register to login`);
+  // }
+
+  return UserRes;
 };

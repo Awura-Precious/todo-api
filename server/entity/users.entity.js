@@ -21,7 +21,7 @@ const userSchema = new EntitySchema({
     },
     email: {
       type: "varchar",
-      unique: true,
+      // unique: true,
     },
     timestamp: {
       type: "timestamp",
