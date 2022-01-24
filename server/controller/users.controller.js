@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const { ExclusionMetadata } = require("typeorm/metadata/ExclusionMetadata");
 
 const userModel = require("../model/user.model");
 const { signUpVal } = require("../validation/signUpValidation");
@@ -17,7 +16,6 @@ exports.addUser = async (req, res) => {
 
     const { firstName, lastName, pass, mailAdd } = req.body;
     const hashedPassword = await bcrypt.hash(pass, 10);
-    //checking to see is email already exist
 
     const response = await userModel.signUp(
       firstName,
@@ -59,8 +57,6 @@ exports.login = async (req, res) => {
       password: response.pass,
     };
 
-    console.log(user);
-
     // Send TOKEN
     const key = process.env.JWT_SECRETKEY;
     const token = await jwt.sign(user, key);
@@ -79,4 +75,3 @@ exports.loginGet = async (req, res) => {
   const { firstName } = req.user;
   res.send(`Welcome ${firstName}`);
 };
-
