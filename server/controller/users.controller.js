@@ -2,10 +2,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userModel = require("../model/user.model");
+const { signInVal } = require("../validation/loginVal");
 const { signUpVal } = require("../validation/signUpValidation");
 
 //adding a user
 exports.addUser = async (req, res) => {
+  const { firstName, lastName, pass, mailAdd } = req.body;
   try {
     const errors = signUpVal(req);
 
@@ -14,7 +16,6 @@ exports.addUser = async (req, res) => {
       return;
     }
 
-    const { firstName, lastName, pass, mailAdd } = req.body;
     const hashedPassword = await bcrypt.hash(pass, 10);
 
     const response = await userModel.signUp(
@@ -32,15 +33,20 @@ exports.addUser = async (req, res) => {
 
 //login controller
 exports.login = async (req, res) => {
+  const { email, pass } = req.body;
+  const {error} = signInVal(req.body)
+
+  if (error){
+    return res.status(400).send('Invalid inputs')
+  }
   try {
-    const { email, pass } = req.body;
 
     // Validate email against database;(authentication)
     const response = await userModel.signIn(email, pass);
 
     if (!response) {
-      return res.status(404).send(`Email isn't registered, 
-                                   Register to login `);
+      return res.status(404).send(`Email isn't registered, Register to login `); 
+                                  
     }
 
     //authenticating pass
