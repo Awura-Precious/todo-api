@@ -1,22 +1,26 @@
 const todoModel = require("../model/todo.model");
 
 exports.addTodo = async (req, res) => {
-  const { task } = req.body;
+  const { text, userId } = req.body;
 
   try {
-    const response = await todoModel.save(task);
-    res.send(response);
+    const response = await todoModel.save(text, userId);
+    // console.log(response);
+    res.status(200).send(response);
+    return response;
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 };
 
 exports.getAllTodo = async (req, res) => {
   try {
     const response = await todoModel.getAll();
-    res.send(response);
+    res.status(200).send(response);
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 };
 
@@ -24,9 +28,10 @@ exports.getOneTodo = async (req, res) => {
   try {
     const { id } = req.params;
     const response = await todoModel.getOne(id);
-    res.send(response);
+    res.status(200).send(response);
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 };
 
@@ -35,10 +40,14 @@ exports.updateTodo = async (req, res) => {
 
   try {
     const response = await todoModel.update(id, task);
-    res.send("success");
-    res.send(response);
+    res.status(200).send({
+      response,
+      message: "success",
+    });
+    res.status(200).send(response);
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 };
 
@@ -46,8 +55,8 @@ exports.deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
     const response = await todoModel.delete(id);
-    res.send(response);
+    res.status(200).send(response);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 };

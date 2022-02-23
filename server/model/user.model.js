@@ -10,8 +10,8 @@ exports.signUp = async (fName, lName, pWord, mail) => {
     email: mail,
   });
   if (emailres) {
-    const result = `Email already exist`;
-    return result;
+    const result = `Email Already Exist`;
+    return result
   }
   const result = await users.save({
     firstName: fName,
@@ -20,7 +20,7 @@ exports.signUp = async (fName, lName, pWord, mail) => {
     email: mail,
   });
 
-  console.log(result);
+  // console.log(result);
   return result;
 };
 

@@ -6,12 +6,13 @@ const todoSchema = require("../entity/todo.entity");
 //async
 //here the system designed functions come
 
-//type orm to perform crud operations 
+//type orm to perform crud operations
 
 //adding a todo
-exports.save = async (item) => {
+exports.save = async (text, userId) => {
   const todoList = getRepository(todoSchema);
-  const result = await todoList.save({ text: item });
+  const result = await todoList.save({ text, userId });
+  console.log(result)
   return result;
 };
 
@@ -23,23 +24,22 @@ exports.getAll = async () => {
 };
 
 //get one todo
-exports.getOne =async(id)=>{
-    const todoList = getRepository(todoSchema);
-    const result = await todoList.findOne(id)
-    return result;
-}
+exports.getOne = async (id) => {
+  const todoList = getRepository(todoSchema);
+  const result = await todoList.findOne(id);
+  return result;
+};
 
 //updating a todo
-exports.update =async(id,text)=>{
-    const todoList = getRepository(todoSchema);
-    const result = await todoList.update({id:id},{text:text} )
-    ;
-    return result;
-}
+exports.update = async (id, text) => {
+  const todoList = getRepository(todoSchema);
+  const result = await todoList.update({ id: id }, { text: text });
+  return result;
+};
 
 //deleting a todo
-exports.delete = async (id) =>{
-    const todoList = getRepository(todoSchema);
-    const result= await todoList.delete(id);
-    return result
-}
+exports.delete = async (id) => {
+  const todoList = getRepository(todoSchema);
+  const result = await todoList.delete(id);
+  return result;
+};

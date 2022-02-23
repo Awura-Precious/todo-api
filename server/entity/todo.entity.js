@@ -12,10 +12,13 @@ const todoSchema = new EntitySchema({
     text: {
       type: "varchar",
     },
+    userId: {
+      type: "varchar",
+    },
     timestamp: {
-			type: 'timestamp',
-			default: () => 'CURRENT_TIMESTAMP',
-		},
+      type: "timestamp",
+      default: () => "CURRENT_TIMESTAMP",
+    },
   },
 });
 

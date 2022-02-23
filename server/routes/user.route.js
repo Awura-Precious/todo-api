@@ -1,10 +1,7 @@
 const express = require("express");
 // const passport = require("passport");
 
-const { 
-    addUser,
-    login,
-    loginGet } = require("../controller/users.controller");
+const { addUser, login, loginGet } = require("../controller/users.controller");
 const { authToken } = require("../validation/auth");
 
 const router = express.Router();
@@ -13,104 +10,15 @@ const router = express.Router();
 router.post("/", addUser);
 
 //login route
-router.post('/login',login) 
+router.post("/login", login);
 
 //post login route
-router.get('/login',authToken,loginGet)
+router.get("/login", authToken, loginGet);
 
 module.exports = router;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // router.post("/login", (req, res, next) => {
-  
+
 //     passport.authenticate("local.signin", (err, user, info) => {
 //       if (err) {
 //         return next(err);
@@ -127,5 +35,3 @@ module.exports = router;
 //       });
 //     })(req, res, next);
 //   });
-
-

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 exports.authToken = (req, res, next) => {
-  const accessKey = process.env.JWT_SECRETkey;
+  const accessKey = process.env.JWT_SECRETKEY;
   //getting authorization header
   const authHeader = req.headers["authorization"];
 
